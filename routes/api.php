@@ -14,7 +14,16 @@ use Illuminate\Http\Request;
 */
 
 
-Route::apiResource('/event', 'EventController');
-Route::apiResource('/response', 'ResponseController');
-Route::get('/option', 'OptionController@getOptionByEventID');
-Route::get('/responsedetail', 'ResponseDetailController@getResponseDetailByResponseID');
+
+
+
+
+Route::get('/hello', ['middleware' => 'cors', function() {
+    return 'You did it!';
+}]);
+Route::get('/option','OptionController@getOptionByEventID')->middleware('cors');
+Route::apiResource('/event',  'EventController')->middleware('cors');
+Route::apiResource('/response', 'ResponseController')->middleware('cors');
+
+Route::get('/eventid/response', 'ResponseDetailController@getResponseIDByEventID')->middleware('cors');
+Route::get('/responsedetail', 'ResponseDetailController@getResponseDetailByResponseID')->middleware('cors');

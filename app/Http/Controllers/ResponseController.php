@@ -6,6 +6,7 @@ use App\Response;
 use App\ResponseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception as GlobalException;
 
 class ResponseController extends Controller
 {
@@ -28,7 +29,7 @@ class ResponseController extends Controller
         $eventid = $request->get('eventid');
         $comment = $request->get('comment');
         $eventarray = array(
-            "nameuser" => "$nameuser",  
+            "nameuser" => "$nameuser",
             "eventid" => "$eventid",
             "comment" => "$comment"
         );
@@ -49,45 +50,73 @@ class ResponseController extends Controller
 
         return $responses;
     }
-    public function destroy(Response $response)
+    public function destroy($id)
     {
-        $response->delete();
-        return response()->json();
+        try {
+            $response = Response::findOrFail($id);
+            $response->delete();
+            $listIDResponseDetail = DB::select('select id from response_details where responseid = ?', [$id]);
+            foreach ($listIDResponseDetail as $responseDetailID) {
+                $responseDetail = ResponseDetail::find($responseDetailID->id);
+                $responseDetail->delete();
+            }
+            return [
+                'message' => 'Delete completed',
+            ];;
+        } catch (GlobalException $e) {
+            return [
+                'message' => 'ResponseID not found',
+            ];;
+        }
     }
-    public function update(Request $request) 
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'responseid' => 'required',
             'nameuser' => 'required',
             'eventid' => 'required',
             'comment' => 'required',
             'responsedetail' => 'required'
         ]);
-        $responseid = $request->get('responseid');
+        $responseid = $id;
         $nameuser = $request->get('nameuser');
         $eventid = $request->get('eventid');
         $comment = $request->get('comment');
         $eventarray = array(
-            "nameuser" => "$nameuser",  
+            "nameuser" => "$nameuser",
             "eventid" => "$eventid",
             "comment" => "$comment"
         );
-        $responses = Response::find($responseid);
-        Response::update($eventarray);
-        $responsedetail = $request->get('responsedetail');
-        foreach ($responsedetail as $answerforoption) {
-            $responsedetailid = $answerforoption['responsedetailid'];
-            $optionid = $answerforoption['optionid'];
-            $answer = $answerforoption['answer'];
-            $responsedetailarray = array(
-                "optionid" => "$optionid",
-                "answer" => "$answer"
-            );
-            ResponseDetail::find($responsedetailid);
-            ResponseDetail::update($responsedetailarray);
+        try{
+            $responses = Response::findOrFail($responseid);
+            $responses->update($eventarray);
+            $responsedetail = $request->get('responsedetail');
+            $responseDetailIDList = DB::select('select id,optionid from response_details where responseid = ?', [$responseid]);
+            foreach ($responsedetail as $answerforoption) {
+                $optionid = $answerforoption['optionid'];
+                $answer = $answerforoption['answer'];
+                $respondetailID = 1;
+                foreach ($responseDetailIDList as $responseDetailID) {
+                    if ($responseDetailID->optionid == $optionid)
+                        $respondetailID = $responseDetailID->id;
+                }
+    
+                $responsedetailarray = array(
+                    "optionid" => "$optionid",
+                    "answer" => "$answer"
+                );
+                $responseDetail = ResponseDetail::find($respondetailID);
+                $responseDetail->update($responsedetailarray);
+            }
+    
+             return [
+                'message' => 'Update successful',
+            ];;
+        } catch (GlobalException $e) {
+            return [
+                'message' => 'ResponseID not found',
+            ];;
         }
-
-        return $request;
+        
     }
     public function show(Response $response)
     {

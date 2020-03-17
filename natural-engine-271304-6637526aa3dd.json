@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "natural-engine-271304",
+  "private_key_id": "6637526aa3ddd26b6cbe07ba1f753c8f2b4373da",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCouHbJ97q9CJkn\nhEZgUmwDlTP7TtEN6Z/V3pnYce06Z3VyAB9D6uOxcTQrsYKcvDinpM9N8rdJdF5K\npteEJkYBARGYg5mOsfCOk7XbzLGDQQmhh74zFKo9nCfcSdLiIOnmdM0uJdp6PND2\nWJlo51PovGlYBM9SMJNVogDmVYAW339ILjOuXhyz1WywyB+w3IZ37SLvXA4MdYjI\nr3C1mIDwjjdSHYZ8+VzRM+WK+q3zGJF6kEMUXDsQv4Z8FWcAYrYEAsU07WtsN7eu\nftCVcOroC2MuhLocFNKes1pRANjlH7RdA1imRFHS7LVpLdW4x06GYD1slZGGxyah\nKfF4fXTPAgMBAAECgf9hRsZprATLXvaIOIhbAMQS5lne8ZJjpk9OMwmzwZVrsKE5\nf6VT6bNdzk15ShJqshrE89qSScT8+04u75yFx/HH1aK15fcJgfTJ2S0BJwOYQxp9\noPk7rXtG1ygkQNKIwT4abgpE944y7BDB9+zhwhfSGAKkvO3+25x9XIP1FiOQpSek\nISpplNjtUNiHhTdQNBZb5+eHK9nHXpeGYPuGzu3lR8lVG3rffuZFzT6bFXKUwiSB\n1pMen/Tf5s2U0+OyfgzfZZCicvJxE21jDnJ4yzDArHA6tQ6N+cMNgPjdmBEKFgEo\nNsOUsR9BuQ8qlKuHTGLbk+XUMqJubksShSYCjaECgYEA5DH9aXPBFNu7/qjgpTLT\nvhyZnLVZi3dtkfLtSCOM3GgkIjMEwXOjRzpUevBQjyI4aepPGxS5XsxlyWDsLBww\nASXNCvLslL/jVtD2+6CErRXlNH5cgZEIPS4M7L4vaGE8k9sg0k4SjrAj9GiZ/+Ao\nCaL11+bxnZu1xVhd4Mxv4FkCgYEAvUdNOPxEH/AZIUqQgV8gt2yupQpbAJZiNGqf\nSKXVbpXtD+VZ9lP1WfrySq2FQhXlJKy7dtB1+veWp81n5KXKYrefzwQ71zWn242a\nKFVJGSTxeL4gcKGKTORlK7f+Th2jkjXiqWOLbTKprh2ldpxRtxbRJrmB2ShaWzVZ\nNejtmWcCgYBBheEf4G72kEmgy9kFVlzaX9fz2VbG5xn9KGXdqueNehG2CDQ7X/ro\nPuV3D33yO387Wl4whnjbsZEgi8YEvGtESRhhJnOsGpUqnoHsqqCuGnVf51Ckm4Jk\nHs7zQ4DVVeZRBkCcYnKNqiII0eg2QqT8b2BsCBIkkUtWSRNbsxgEsQKBgFJTZfIo\nPxVJIBUL0oiCsL83JUshku1Re4ti6L73ajq8OS0Vy6hJYkjtzl7O1EwnK9Bk1PDb\nwMUU1VFNFSgtODbxuS+YntJ/QvBKycdLOQ0XtXOX9pImoPnKyXpXf+PIHnIkv95/\nLpCjXYwe1u4dFam14eie/SxP0eUj8hZxpo53AoGBAKQiCWEOsV/9DW7S7MLXKQ9a\n9/C+iBcn9PAScz6HtCgfGAnLk2PcHF9LoacFpwFDsyDiTf8VQJIUaRRAOsFDpB7U\n/yr94EniJCNTGyuwdpg4EYYIh03jJJP+IkanFOjLQs7pUoFM+KBt1v2NiiQhuUcT\n9FQqHyWUL2VWQT71o8xl\n-----END PRIVATE KEY-----\n",
+  "client_email": "duybmwpro@natural-engine-271304.iam.gserviceaccount.com",
+  "client_id": "113790237490740559477",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/duybmwpro%40natural-engine-271304.iam.gserviceaccount.com"
+}

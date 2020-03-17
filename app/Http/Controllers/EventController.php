@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception as GlobalException;
+use FFI\Exception;
 
 class EventController extends Controller
 {
     //
     public function store(Request $request)
     {
+       
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -34,20 +38,79 @@ class EventController extends Controller
             );
             Option::create($timearray);
         }
-        return $request->all();
-    }
-    public function destroy(Event $event)
-    {
-        $event->delete();
-        return response()->json();
-    }
-    public function update(Event $event, Request $request) 
-    {
-        $event->update($request->all());
         return $event;
     }
-    public function show(Event $event)
+    public function destroy($id)
     {
-        return $event;
+        try{
+            $event = Event::findOrFail($id);
+            $event->delete();
+            return [
+                'message' => 'Delete successful',
+            ];;
+        }
+        
+        catch (GlobalException $e) {
+            return [
+                'message' => 'EventID not found',
+            ];;
+        }
+        
+    }
+    public function update(Request $request,$id) 
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'options' => 'required',
+        ]);
+
+        $name = $request->get('name');
+        $description = $request->get('description');
+        $eventarray = array(
+            "name" => "$name",  
+            "description" => "$description"
+        );
+        try{
+            $event = Event::findOrFail($id);
+            $event->update($eventarray);
+            $listoption = $request->get('options');
+            $optionListID = DB::select('select id,content from options where eventid = ?',[$id]);
+            for ($i = 0; $i < sizeof($listoption); $i++) {
+                $content = $listoption[$i]['content'];
+                $optionid = $optionListID[$i]->id;
+                
+                $timearray = array(
+                    "eventid" => "$id",
+                    "content" => "$content"
+                );
+                $option = Option::find($optionid);
+                $option->update($timearray);
+            }
+    
+            return [
+                'message' => 'Update successful',
+            ];;
+        }
+        catch (GlobalException $e) {
+            return [
+                'message' => 'EventID not found',
+            ];;
+        }
+        
+    }
+    public function show($id)
+    {
+        try{
+            $event = Event::findOrFail($id);
+            return $event;
+        }
+        
+        catch (GlobalException $e) {
+            return [
+                'message' => 'EventID not found',
+            ];;
+        }
+        
     }
 }
