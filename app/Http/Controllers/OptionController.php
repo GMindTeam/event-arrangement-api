@@ -11,7 +11,7 @@ class OptionController extends Controller
     public function getOptionByEventID(Request $request)
     {
         $eventid = $request->input('eventid');
-        $optionlist = DB::table('options')->where('eventid', $eventid)->get();
-        return $optionlist;
+        $optionList = DB::table('options')->where('eventid', $eventid)->get();
+        return $optionList;
     }
 }

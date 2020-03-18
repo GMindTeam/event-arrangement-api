@@ -14,8 +14,8 @@ class ResponseController extends Controller
     public function index(Request $request)
     {
         $eventid = $request->input('eventid');
-        $responselist = DB::table('responses')->where('eventid', $eventid)->get();
-        return $responselist;
+        $responseList = DB::table('responses')->where('eventid', $eventid)->get();
+        return $responseList;
     }
     public function store(Request $request)
     {
@@ -28,24 +28,24 @@ class ResponseController extends Controller
         $nameuser = $request->get('nameuser');
         $eventid = $request->get('eventid');
         $comment = $request->get('comment');
-        $eventarray = array(
+        $responseArray = array(
             "nameuser" => "$nameuser",
             "eventid" => "$eventid",
             "comment" => "$comment"
         );
-        $responses = Response::create($eventarray);
+        $responses = Response::create($responseArray);
 
-        $responsedetail = $request->get('responsedetail');
-        foreach ($responsedetail as $answerforoption) {
+        $responseDetailList = $request->get('responsedetail');
+        foreach ($responseDetailList as $responseDetail) {
             $responseid = $responses->id;
-            $optionid = $answerforoption['optionid'];
-            $answer = $answerforoption['answer'];
-            $responsedetailarray = array(
+            $optionid = $responseDetail['optionid'];
+            $answer = $responseDetail['answer'];
+            $responseDetailArray = array(
                 "responseid" => "$responseid",
                 "optionid" => "$optionid",
                 "answer" => "$answer"
             );
-            ResponseDetail::create($responsedetailarray);
+            ResponseDetail::create($responseDetailArray);
         }
 
         return $responses;
@@ -55,8 +55,8 @@ class ResponseController extends Controller
         try {
             $response = Response::findOrFail($id);
             $response->delete();
-            $listIDResponseDetail = DB::select('select id from response_details where responseid = ?', [$id]);
-            foreach ($listIDResponseDetail as $responseDetailID) {
+            $listResponseDetailID = DB::select('select id from response_details where responseid = ?', [$id]);
+            foreach ($listResponseDetailID as $responseDetailID) {
                 $responseDetail = ResponseDetail::find($responseDetailID->id);
                 $responseDetail->delete();
             }
@@ -81,31 +81,30 @@ class ResponseController extends Controller
         $nameuser = $request->get('nameuser');
         $eventid = $request->get('eventid');
         $comment = $request->get('comment');
-        $eventarray = array(
+        $responseArray = array(
             "nameuser" => "$nameuser",
             "eventid" => "$eventid",
             "comment" => "$comment"
         );
         try{
             $responses = Response::findOrFail($responseid);
-            $responses->update($eventarray);
-            $responsedetail = $request->get('responsedetail');
+            $responses->update($responseArray);
+            $responseDetailList = $request->get('responsedetail');
             $responseDetailIDList = DB::select('select id,optionid from response_details where responseid = ?', [$responseid]);
-            foreach ($responsedetail as $answerforoption) {
-                $optionid = $answerforoption['optionid'];
-                $answer = $answerforoption['answer'];
-                $respondetailID = 1;
+            foreach ($responseDetailList as $responseDetail) {
+                $optionid = $responseDetail['optionid'];
+                $answer = $responseDetail['answer'];
+                $respondetailID = 0;
                 foreach ($responseDetailIDList as $responseDetailID) {
                     if ($responseDetailID->optionid == $optionid)
                         $respondetailID = $responseDetailID->id;
                 }
-    
-                $responsedetailarray = array(
+                $responseDetailArray = array(
                     "optionid" => "$optionid",
                     "answer" => "$answer"
                 );
                 $responseDetail = ResponseDetail::find($respondetailID);
-                $responseDetail->update($responsedetailarray);
+                $responseDetail->update($responseDetailArray);
             }
     
              return [
