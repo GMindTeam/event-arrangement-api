@@ -11,13 +11,13 @@ use Exception as GlobalException;
 class ResponseController extends Controller
 {
     //
-    public function index(Request $request)
+    public function getResponseListFromEventID($id)
     {
-        $eventid = $request->input('eventid');
+        $eventid = $id;
         $responseList = DB::table('responses')->where('eventid', $eventid)->get();
         return $responseList;
     }
-    public function store(Request $request)
+    public function createResponse(Request $request)
     {
         $request->validate([
             'nameuser' => 'required',
@@ -50,7 +50,7 @@ class ResponseController extends Controller
 
         return $responses;
     }
-    public function destroy($id)
+    public function deleteResponse($id)
     {
         try {
             $response = Response::findOrFail($id);
@@ -69,7 +69,7 @@ class ResponseController extends Controller
             ];;
         }
     }
-    public function update(Request $request, $id)
+    public function editResponse(Request $request, $id)
     {
         $request->validate([
             'nameuser' => 'required',
@@ -116,9 +116,5 @@ class ResponseController extends Controller
             ];;
         }
         
-    }
-    public function show(Response $response)
-    {
-        return $response;
     }
 }

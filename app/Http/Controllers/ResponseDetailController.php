@@ -15,7 +15,6 @@ class ResponseDetailController extends Controller
         try{
             $responseid = $request->input('responseid');
             $response = Response::findOrFail($responseid);
-            
             $responseDetailList = DB::table('response_details')->where('responseid', $responseid)->get();
             $result = array(
                 "id" => "$response->id",
@@ -40,14 +39,6 @@ class ResponseDetailController extends Controller
         catch(Exception $e)
         {
             return $e;
-        }
-
-        
-    }
-    public function getResponseIDByEventID(Request $request)
-    {
-        $eventid = $request->input('eventid');
-        $responseList = DB::table('responses')->where('eventid', $eventid)->get();
-        return $responseList;
+        } 
     }
 }

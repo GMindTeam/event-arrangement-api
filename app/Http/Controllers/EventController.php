@@ -12,7 +12,7 @@ use FFI\Exception;
 class EventController extends Controller
 {
     //
-    public function store(Request $request)
+    public function createEvent(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -38,21 +38,8 @@ class EventController extends Controller
         }
         return $event;
     }
-    public function destroy($id)
-    {
-        try {
-            $event = Event::findOrFail($id);
-            $event->delete();
-            return [
-                'message' => 'Delete successful',
-            ];;
-        } catch (GlobalException $e) {
-            return [
-                'message' => 'EventID not found',
-            ];;
-        }
-    }
-    public function update(Request $request, $id)
+
+    public function updateEvent(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
@@ -89,7 +76,7 @@ class EventController extends Controller
             ];;
         }
     }
-    public function show($id)
+    public function getEventDetailFromEventID($id)
     {
         try {
             $event = Event::findOrFail($id);
@@ -128,4 +115,18 @@ class EventController extends Controller
             return $e;
         }
     }
+        // public function destroy($id)
+    // {
+    //     try {
+    //         $event = Event::findOrFail($id);
+    //         $event->delete();
+    //         return [
+    //             'message' => 'Delete successful',
+    //         ];;
+    //     } catch (GlobalException $e) {
+    //         return [
+    //             'message' => 'EventID not found',
+    //         ];;
+    //     }
+    // }
 }
